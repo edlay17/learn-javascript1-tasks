@@ -102,3 +102,39 @@ let user2 = {
   };
   
  askPassword2(user2.login.bind(user2, true), user2.login.bind(user2, false)); 
+
+  /*
+  my own bind
+  */
+
+function bind(f, context, ...args) {
+    const wrapper = () => wrapper.call();
+
+    wrapper.BoundTargetFunction = f;
+    wrapper.BoundThis = context;
+    wrapper.BoundArguments = args;
+
+    wrapper.call = function() {
+        const {
+            BoundTargetFunction,
+            BoundThis,
+            BoundArguments
+        } = wrapper;
+
+        BoundTargetFunction.call(BoundThis, ...BoundArguments);
+    }
+
+    return wrapper;
+}
+
+const obj = {
+    name: 'Ivan',
+    surname: 'Ivanov',
+    f(debugMessage) {
+        console.log(debugMessage);
+        alert('hi ' + this.name + ' ' + this.surname);
+    }
+}
+
+const bindedFunc = bind(obj.f, obj, 'everything is ok');
+bindedFunc();
