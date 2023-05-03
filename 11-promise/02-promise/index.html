@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="main.js"></script>
+
+    <style>
+        .message-ball {
+            font-size: 20px;
+            line-height: 200px;
+            text-align: center;
+        }
+        .circle {
+          transition-property: width, height;
+          transition-duration: 2s;
+          position: fixed;
+          transform: translateX(-50%) translateY(-50%);
+          background-color: red;
+          border-radius: 50%;
+        }
+      </style>
+</head>
+<body> 
+    <button onclick="go()">showCircle(150, 150, 100)</button>
+</body>
+</html>
