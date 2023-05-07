@@ -116,12 +116,12 @@ async function demoGithubUser() {
 
     try {
       const user = await loadJson2(`https://api.github.com/users/${name}`);
-      alert(`Полное имя: ${user.name}.`);
+      console.log(`Полное имя: ${user.name}.`);
       return user;
     }
     catch(err) {
       if (err instanceof HttpError && err.response.status == 404) {
-        alert("Такого пользователя не существует, пожалуйста, повторите ввод.");
+        console.log("Такого пользователя не существует, пожалуйста, повторите ввод.");
       } else {
         throw err;
       }
@@ -130,3 +130,40 @@ async function demoGithubUser() {
 }
 
 console.log(demoGithubUser());
+
+
+
+/*
+
+async function wait() {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
+  return 10;
+}
+
+function f() {
+  // ...что здесь написать?
+  // чтобы вызвать wait() и дождаться результата "10" от async–функции
+  // не забывайте, здесь нельзя использовать "await"
+}
+
+*/
+
+async function wait() {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
+  return 10;
+}
+
+function f() {
+  wait().then(console.log)
+}
+
+function f2() {
+  (async function() {
+    console.log(await wait());
+  })();
+}
+
+f();
+f2();
