@@ -17,11 +17,11 @@ function sleep(ms) {
 }
 
 sleep(1000).then(() => {
-  //console.log('resolved after 1000ms');
+  console.log('resolved after 1000ms');
 })
 
 sleep(4000).then(() => {
-  //console.log('resolved after 4000ms');
+  console.log('resolved after 4000ms');
 })
 
 
@@ -48,7 +48,6 @@ fejectAfterSleep(100, 'boom!')
   })
   .then(console.log);
 
-
 /*
 // Необходимо написать функцию, которая принимает объект Promise и некоторое количество миллисекунд
 // и возвращает новый Promise.
@@ -70,8 +69,8 @@ function timeout(promise, ms) {
   )
 }
 
-//timeout(fetch('https://catfact.ninja/fact'), 50).then(console.log, console.log);
-//timeout(fetch('https://catfact.ninja/fact'), 5000).then(console.log, console.log);
+timeout(fetch('https://catfact.ninja/fact'), 50).then(console.log, console.log);
+timeout(fetch('https://catfact.ninja/fact'), 5000).then(console.log, console.log);
 
 
 
@@ -88,17 +87,12 @@ function promiseAll(arr) {
 
   const promise = new Promise((resolve, reject) => {
     const addResult = (result, index) => {
-      const promise = promisisfy(result);
-      
-      results[index] = promise;
+      results[index] = result;
       results.length++;
-      if (results.length === arr.length) resolve(results);
-    }
 
-    const promisisfy = (result) => {
-      if (result.then) return result;
-
-      return Promise.resolve(result);
+      if (results.length === arr.length) {
+        resolve(Array.from(results));
+      }
     }
 
     for (let i = 0; i < arr.length; i++) {
@@ -135,7 +129,9 @@ const rejected = new Promise((resolve, reject) => {
   setTimeout(() => reject('404'), 100);
 })
 
-const result = promiseAll([fetch1, fetch2, prom, prom2, primitive1, primitive2, rejected]);
+const promises = [fetch1, fetch2, prom, prom2, rejected];
+
+const result = promiseAll(promises);
 
 result.then(result => {
   console.log('all completed');
@@ -145,9 +141,18 @@ result.then(result => {
 })
 result.then(
   res2 => {
+    console.log('all completed 2');
     console.log(res2);
   }, 
   (err) => {
     console.log(err);
   }
 )
+
+const result2 = Promise.all([fetch1, fetch2, prom, prom2]);
+result2.then(res => {
+  console.log('default promise completed')
+  console.log(res);
+})
+console.log('default promise all')
+console.log(result2);
